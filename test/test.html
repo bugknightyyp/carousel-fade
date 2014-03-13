@@ -1,0 +1,82 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>carousel</title>
+  <style>
+.banner{
+  width: 800px;
+  height: 300px;
+  position: relative;
+  overflow: hidden;
+}
+
+
+.banner a {
+    display: block;
+    height: 100%;
+    left: 0;
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+}
+.banner ol {
+    list-style: none;
+    bottom: 10px;
+    position: absolute;
+    right: 30px;
+}
+
+.banner ol li {
+    background-clip: padding-box;
+    background-color: #CCCCCC;
+    border-radius: 15px;
+    color: #FFFFFF;
+    cursor: pointer;
+    float: left;
+    font-family: Arial,"宋体";
+    font-size: 16px;
+    height: 25px;
+    line-height: 25px;
+    margin-left: 10px;
+    text-align: center;
+    width: 25px;
+}
+
+.banner ol li.on {
+    background-color: #FF6600;
+    cursor: default;
+}
+  </style>
+</head>
+<body>
+<div class="banner"></div>
+<div class="banner"></div>
+ 
+<script src="http://wres.mangocity.com/js/lib/seajs/2.1.1/sea.js" ></script>
+<script>
+var banners = [{
+  href: "#",
+  src: 'http://wimg.mangocity.com/img/v/20130606/banner_11.jpg'
+},{
+  href: "#",
+  src: 'http://wimg.mangocity.com/img/v/20130606/banner_2.jpg'
+},{
+  href: "#",
+  src: 'http://wimg.mangocity.com/img/v/20130606/banner_3.jpg'
+},{
+  href: "#",
+  src: 'http://wimg.mangocity.com/img/v/20130606/banner_4.jpg'
+}]
+
+
+seajs.use(['jquery/1.11.0/jquery.cmd.min','../lib/carousel-fade.cmd'],function($){
+  $(".banner").carouselFade(banners,{speed: 1000,initCallback: function(){
+    alert('ss')
+  }});
+});
+</script>
+</body>
+</html>
+
