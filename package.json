@@ -1,0 +1,29 @@
+{
+  "name": "carousel-fade",
+  "version": "1.0.1",
+  "description": "carousel-fade\r =============",
+  "main": "gruntfile.js",
+  "scripts": {
+    "test": "grunt qunit"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/bugknightyyp/carousel-fade.git"
+  },
+  "keywords": [
+    "carousel"
+  ],
+  "author": "bugknightyyp",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bugknightyyp/carousel-fade/issues"
+  },
+  "homepage": "https://github.com/bugknightyyp/carousel-fade",
+  "devDependencies": {
+    "grunt": "~0.4.3",
+    "grunt-contrib-qunit": "~0.4.0",
+    "grunt-contrib-copy": "~0.5.0",
+    "grunt-cmd-transport": "~0.4.1",
+    "grunt-contrib-uglify": "~0.4.0"
+  }
+}
