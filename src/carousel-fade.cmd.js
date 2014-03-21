@@ -54,8 +54,8 @@ var util = require('util/1.0.4/util.cmd');
     var _this = this;
     var imgStr = _.template('<% _.each(banners, function(banner) { %> '+
      '<a target="_blank" style="disiplay: block; background: url(<%= banner.src %>) center center no-repeat;"  href="<%= banner.href %>"></a> <% }); %>', {banners: banners});
-    var indexStr = _.template('<ol><% _.each(banners, function(banner, index) { %> '+
-     '<li index="<%= index %>"><%= index + 1 %></li> <% }); %></ol>', {banners: banners});
+    var indexStr = _.template('<div class="carousel-index"><ol><% _.each(banners, function(banner, index) { %> '+
+     '<li index="<%= index %>"><%= index + 1 %></li> <% }); %></ol></div>', {banners: banners});
     
     var btnStr = '<div class="carousel-btn carousel-btn-left"></div><div class="carousel-btn carousel-btn-right"></div>'
     
@@ -66,7 +66,7 @@ var util = require('util/1.0.4/util.cmd');
     
     this.element.html(imgStr + indexStr + (this.options.isContainBtn? btnStr : ''));
     this._imgWraps = this.element.find('> a');
-    this._indexWraps = this.element.find('> ol li');
+    this._indexWraps = this.element.find('ol li');
     this._btns = this.element.find('.carousel-btn');
     
     this.element.on('mouseenter', 'ol li', function(e){

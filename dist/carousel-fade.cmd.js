@@ -1,4 +1,4 @@
-define("util/1.0.1/carousel-fade.cmd", [ "jquery/1.11.0/jquery.cmd.min", "underscore/1.6.0/underscore.cmd.min", "util/1.0.4/util.cmd" ], function(require, exports, module) {
+define("carousel-fade/1.0.1/carousel-fade.cmd", [ "jquery/1.11.0/jquery.cmd.min", "underscore/1.6.0/underscore.cmd.min", "util/1.0.4/util.cmd" ], function(require, exports, module) {
     var $ = require("jquery/1.11.0/jquery.cmd.min");
     var _ = require("underscore/1.6.0/underscore.cmd.min");
     var util = require("util/1.0.4/util.cmd");
@@ -55,7 +55,7 @@ define("util/1.0.1/carousel-fade.cmd", [ "jquery/1.11.0/jquery.cmd.min", "unders
         var imgStr = _.template("<% _.each(banners, function(banner) { %> " + '<a target="_blank" style="disiplay: block; background: url(<%= banner.src %>) center center no-repeat;"  href="<%= banner.href %>"></a> <% }); %>', {
             banners: banners
         });
-        var indexStr = _.template("<ol><% _.each(banners, function(banner, index) { %> " + '<li index="<%= index %>"><%= index + 1 %></li> <% }); %></ol>', {
+        var indexStr = _.template('<div class="carousel-index"><ol><% _.each(banners, function(banner, index) { %> ' + '<li index="<%= index %>"><%= index + 1 %></li> <% }); %></ol></div>', {
             banners: banners
         });
         var btnStr = '<div class="carousel-btn carousel-btn-left"></div><div class="carousel-btn carousel-btn-right"></div>';
@@ -65,7 +65,7 @@ define("util/1.0.1/carousel-fade.cmd", [ "jquery/1.11.0/jquery.cmd.min", "unders
         }, 200, this);
         this.element.html(imgStr + indexStr + (this.options.isContainBtn ? btnStr : ""));
         this._imgWraps = this.element.find("> a");
-        this._indexWraps = this.element.find("> ol li");
+        this._indexWraps = this.element.find("ol li");
         this._btns = this.element.find(".carousel-btn");
         this.element.on("mouseenter", "ol li", function(e) {
             throttleProxy(this);
