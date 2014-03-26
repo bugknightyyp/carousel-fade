@@ -28,11 +28,11 @@ var util = require('util/1.0.4/util.cmd');
       this._indexWraps.eq(goIndex).addClass('on').siblings('.on').removeClass('on');
       this._imgWraps.filter(':animated').stop(false, true);
       if (this._index != null)
-        this._imgWraps.eq(this._index).animate({opacity: 0}, 500,function(){
+        this._imgWraps.eq(this._index).animate({opacity: 0}, 1000,function(){
           $(this).css({'z-index': 0});
         });
       
-      this._imgWraps.eq(goIndex).animate({opacity: 1}, 500,function(){
+      this._imgWraps.eq(goIndex).animate({opacity: 1}, 1000,function(){
          _this._index = goIndex;
          $(this).css({'z-index': 1});
       });
