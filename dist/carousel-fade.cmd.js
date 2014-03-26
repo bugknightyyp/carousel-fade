@@ -23,14 +23,14 @@ define("carousel-fade/1.0.1/carousel-fade.cmd", [ "jquery/1.11.0/jquery.cmd.min"
         this._imgWraps.filter(":animated").stop(false, true);
         if (this._index != null) this._imgWraps.eq(this._index).animate({
             opacity: 0
-        }, 500, function() {
+        }, 1e3, function() {
             $(this).css({
                 "z-index": 0
             });
         });
         this._imgWraps.eq(goIndex).animate({
             opacity: 1
-        }, 500, function() {
+        }, 1e3, function() {
             _this._index = goIndex;
             $(this).css({
                 "z-index": 1
@@ -72,6 +72,7 @@ define("carousel-fade/1.0.1/carousel-fade.cmd", [ "jquery/1.11.0/jquery.cmd.min"
         }).on("mouseenter", function() {
             clearInterval(_this._timer);
         }).on("mouseleave", function() {
+            clearInterval(_this._timer);
             _this._timer = setInterval(function() {
                 _this.auto();
             }, _this.options.speed);
