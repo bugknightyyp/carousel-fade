@@ -8,7 +8,8 @@ var util = require('util/1.0.4/util.cmd');
   function simpleFadeCarouselFactory(element, banners, options) {
     this.banners = banners;
     this.options = $.extend({
-      speed: 2000,
+      switchSpeed: 2000,
+      fadeSpeed: 800,
       isContainBtn: true,
       initCallback: $.noop,
       completeCallback: $.noop
@@ -26,13 +27,13 @@ var util = require('util/1.0.4/util.cmd');
   prot.switchState = function(goIndex){
       var _this = this;
       this._indexWraps.eq(goIndex).addClass('on').siblings('.on').removeClass('on');
-      this._imgWraps.filter(':animated').stop(false, true);
+      this._imgWraps.filter(':animated').stop(true, false);
       if (this._index != null)
-        this._imgWraps.eq(this._index).animate({opacity: 0}, 1000,function(){
+        this._imgWraps.eq(this._index).animate({opacity: 0}, this.options.fadeSpeed, function(){
           $(this).css({'z-index': 0});
         });
       
-      this._imgWraps.eq(goIndex).animate({opacity: 1}, 1000,function(){
+      this._imgWraps.eq(goIndex).animate({opacity: 1}, this.options.fadeSpeed, function(){
          _this._index = goIndex;
          $(this).css({'z-index': 1});
       });
@@ -53,12 +54,10 @@ var util = require('util/1.0.4/util.cmd');
   prot.init = function(){
     var _this = this;
     var imgStr = _.template('<% _.each(banners, function(banner) { %> '+
-     '<a target="_blank" style="disiplay: block; background: url(<%= banner.src %>) center center no-repeat;"  href="<%= banner.href %>"></a> <% }); %>', {banners: banners});
+     '<a target="_blank" style="disiplay: block; opacity: 0; background: url("<%= banner.src %>") center center no-repeat;"  href="<%= banner.href %>" name="<%= banner.name %>"></a> <% }); %>', {banners: banners});
     var indexStr = _.template('<div class="carousel-index"><ol><% _.each(banners, function(banner, index) { %> '+
      '<li index="<%= index %>"><%= index + 1 %></li> <% }); %></ol></div>', {banners: banners});
-    
-    var btnStr = '<div class="carousel-btn carousel-btn-left"></div><div class="carousel-btn carousel-btn-right"></div>'
-    
+    var btnStr = '<div class="carousel-btn carousel-btn-left"></div><div class="carousel-btn carousel-btn-right"></div>';
     var throttleProxy = util.throttle( function(el){
         var index = parseInt($(el).attr('index'));
         _this.switchState(index);
@@ -77,7 +76,7 @@ var util = require('util/1.0.4/util.cmd');
     }) 
       .on('mouseleave',function(){
         clearInterval(_this._timer);
-        _this._timer = setInterval(function(){_this.auto();}, _this.options.speed);
+        _this._timer = setInterval(function(){_this.auto();}, _this.options.switchSpeed);
     }).on('click', '.carousel-btn', function(e){
       var indexBtn = _this._btns.index(this);
       var goToIndex;
@@ -89,7 +88,7 @@ var util = require('util/1.0.4/util.cmd');
     });
     
     this.switchState(0);
-    this._timer = setInterval(function(){_this.auto();}, _this.options.speed);
+    this._timer = setInterval(function(){_this.auto();}, _this.options.switchSpeed);
     
     this.options.completeCallback();
   };

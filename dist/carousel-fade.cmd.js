@@ -6,7 +6,8 @@ define("carousel-fade/1.0.1/carousel-fade.cmd", [ "jquery/1.11.0/jquery.cmd.min"
     function simpleFadeCarouselFactory(element, banners, options) {
         this.banners = banners;
         this.options = $.extend({
-            speed: 2e3,
+            switchSpeed: 2e3,
+            fadeSpeed: 800,
             isContainBtn: true,
             initCallback: $.noop,
             completeCallback: $.noop
@@ -20,17 +21,17 @@ define("carousel-fade/1.0.1/carousel-fade.cmd", [ "jquery/1.11.0/jquery.cmd.min"
     prot.switchState = function(goIndex) {
         var _this = this;
         this._indexWraps.eq(goIndex).addClass("on").siblings(".on").removeClass("on");
-        this._imgWraps.filter(":animated").stop(false, true);
+        this._imgWraps.filter(":animated").stop(true, false);
         if (this._index != null) this._imgWraps.eq(this._index).animate({
             opacity: 0
-        }, 1e3, function() {
+        }, this.options.fadeSpeed, function() {
             $(this).css({
                 "z-index": 0
             });
         });
         this._imgWraps.eq(goIndex).animate({
             opacity: 1
-        }, 1e3, function() {
+        }, this.options.fadeSpeed, function() {
             _this._index = goIndex;
             $(this).css({
                 "z-index": 1
@@ -52,7 +53,7 @@ define("carousel-fade/1.0.1/carousel-fade.cmd", [ "jquery/1.11.0/jquery.cmd.min"
     };
     prot.init = function() {
         var _this = this;
-        var imgStr = _.template("<% _.each(banners, function(banner) { %> " + '<a target="_blank" style="disiplay: block; background: url(<%= banner.src %>) center center no-repeat;"  href="<%= banner.href %>"></a> <% }); %>', {
+        var imgStr = _.template("<% _.each(banners, function(banner) { %> " + '<a target="_blank" style="disiplay: block; opacity: 0; background: url(<%= banner.src %>) center center no-repeat;"  href="<%= banner.href %>" name="<%= banner.name %>"></a> <% }); %>', {
             banners: banners
         });
         var indexStr = _.template('<div class="carousel-index"><ol><% _.each(banners, function(banner, index) { %> ' + '<li index="<%= index %>"><%= index + 1 %></li> <% }); %></ol></div>', {
@@ -75,7 +76,7 @@ define("carousel-fade/1.0.1/carousel-fade.cmd", [ "jquery/1.11.0/jquery.cmd.min"
             clearInterval(_this._timer);
             _this._timer = setInterval(function() {
                 _this.auto();
-            }, _this.options.speed);
+            }, _this.options.switchSpeed);
         }).on("click", ".carousel-btn", function(e) {
             var indexBtn = _this._btns.index(this);
             var goToIndex;
@@ -85,7 +86,7 @@ define("carousel-fade/1.0.1/carousel-fade.cmd", [ "jquery/1.11.0/jquery.cmd.min"
         this.switchState(0);
         this._timer = setInterval(function() {
             _this.auto();
-        }, _this.options.speed);
+        }, _this.options.switchSpeed);
         this.options.completeCallback();
     };
     $.fn[PLUGIN_NAME] = function(banners, options) {
